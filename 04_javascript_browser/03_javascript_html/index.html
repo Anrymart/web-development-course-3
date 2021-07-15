@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript and HTML</title>
+    <link href="https://fonts.googleapis.com/css?family=Jacques+Francois" rel="stylesheet">
+    <style>
+        body {
+            background: #eee;
+            font-family: 'Jacques Francois', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #222;
+        }
+
+        .quote-container {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 6px;
+            padding: 40px;
+            max-width: 60%;
+            min-width: 600px;
+        }
+
+        .quote {
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .author {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+            color: #6f6f6f;
+        }
+
+        .load-button {
+            font-size: 16px;
+            margin-top: 30px;
+            background: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .load-button:hover {
+            background-color: #34a5dd;
+            color: #fff;
+        }
+
+    </style>
+
+    <script defer src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script defer src="https://javascript.info/article/script-async-defer/long.js?speed=1"></script>
+    <script defer src="main.js"></script>
+</head>
+<body>
+<div class="quote-container">
+    <div class="quote">
+        “<span id="quote">Some quote.</span>“
+    </div>
+    <div class="author">— <span id="author">Henry Petroski</span></div>
+</div>
+
+<button class="load-button" id="button">Load next</button>
+
+<script>
+
+    // Select elements by ids
+    var quote = $('#quote');
+    var author = $('#author');
+    var button = $('#button');
+
+    // Add button click handler
+    button.click(function () {
+
+        button.text('Loading...');
+        button.attr('disabled', true);
+
+        // When button is clicked, request url for new quote
+        $.ajax({
+            url: 'http://quotes.stormconsultancy.co.uk/random.json'
+        }).done(function (data) {
+            quote.text(data.quote);
+            author.text(data.author);
+            button.text('Load next');
+            button.attr('disabled', false);
+        });
+    });
+
+</script>
+
+</body>
+</html>
