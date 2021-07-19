@@ -1,4 +1,5 @@
 import React from "react";
+import CreateProduct from "./CreateProduct";
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class App extends React.Component {
                 <ul className="products">
                     {this.state.products.map(product => <li key={product.id}>{product.name}</li>)}
                 </ul>
+                <CreateProduct></CreateProduct>
             </div>
         );
     }

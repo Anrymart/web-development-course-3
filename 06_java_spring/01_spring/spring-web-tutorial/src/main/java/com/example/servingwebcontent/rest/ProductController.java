@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.TreeMap;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 public class ProductController {
 
     private final TreeMap<Integer, Product> productMap;
