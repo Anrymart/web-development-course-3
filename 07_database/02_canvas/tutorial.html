@@ -25,15 +25,15 @@
 
     // Draw circles
     context.beginPath();
-    context.strokeStyle = "#ff0000";
-    context.fillStyle = "#00ff00";
-    context.arc(300, 100, 40, 0, 2 * Math.PI);
+    context.strokeStyle = "#000000";
+    context.arc(300, 100, 40, 3 * Math.PI / 2, 2 * Math.PI);
     context.stroke();
     context.fill();
     context.closePath();
 
     // Draw text
     context.font = "30px Arial";
+    context.fillStyle = "#00ff00";
     context.fillText("Hello, web-dev!", 10, 200);
 
     // Draw gradient
@@ -50,9 +50,6 @@
     image.addEventListener('load', () => {
         context.drawImage(image, 350, 350, 200, 200, 400, 400, 200, 200);
     });
-
-    // Draw image on canvas
-    context.drawImage(image, 400, 400);
 
     // Save canvas to an image
     // image.src = canvas.toDataURL('image/webp');

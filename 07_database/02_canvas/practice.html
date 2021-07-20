@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drawing on canvas</title>
+    <style>
+        canvas {
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<p>
+    Some text
+</p>
+<p>
+    Some more text
+</p>
+<div>
+    <label>
+        Choose color:
+        <input type="color" id="colorPicker">
+    </label>
+</div>
+<div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+</div>
+
+<script>
+
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    const colorPicker = document.getElementById('colorPicker');
+
+    let color = colorPicker.value;
+    let isMouseDown = false;
+    let prevEvent;
+    colorPicker.addEventListener('change', () => {
+        color = colorPicker.value;
+    });
+
+    document.addEventListener('mousedown', (event) => {
+        isMouseDown = true;
+        prevEvent = event;
+    });
+    document.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        prevEvent = null;
+    });
+    canvas.addEventListener('mouseout', () => {
+        prevEvent = null;
+    });
+    canvas.addEventListener('mouseenter', (event) => {
+        prevEvent = event;
+    })
+    canvas.addEventListener('mousemove', (event) => {
+        if (isMouseDown) {
+            context.beginPath();
+            context.strokeStyle = color;
+            context.moveTo(prevEvent.offsetX, prevEvent.offsetY);
+            context.lineTo(event.offsetX, event.offsetY);
+            context.stroke();
+            prevEvent = event;
+        }
+    })
+</script>
+</body>
+</html>
