@@ -7,14 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsContext;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Application {
 
@@ -32,7 +28,7 @@ public class Application {
             ws.onConnect(ctx -> {
                 String username = getUser(ctx);
                 contextMap.put(ctx, username);
-                broadcastMessage(new Message("notification", username + " joined the chat"));
+                broadcastMessage(new Message("notification", username + " joined the board"));
             });
             ws.onClose(ctx -> {
                 String username = contextMap.get(ctx);
@@ -49,6 +45,12 @@ public class Application {
             path("history", () -> {
                 get(ctx -> {
                     ctx.json(messageList);
+                });
+                delete(ctx -> {
+                    messageList.clear();
+                    Map<String, String> data = new HashMap<>();
+                    data.put("action", "clear");
+                    broadcastMessage(new Message("history", data));
                 });
             });
         });
